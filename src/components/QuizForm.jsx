@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 export default function QuizForm() {
-  const [numberOfQuestions, setNumberOfQuestions] = useState(5);
+  const [ numberOfQuestions, setNumberOfQuestions ] = useState(5);
   const [ category, setCategory ] = useState([]);
-  const [ selectedCategory, setSelectedCategory ] = useState("");
-  const [questions, setQuestions] = useState([]);
-  const [difficulty, setDifficulty] = useState("easy" | "medium" | "hard");
+  const [ selectedCategory, setSelectedCategory ] = useState();
+  const [ difficulty, setDifficulty ] = useState("");
+  const [ type, setType ] = useState("");
+
+  const [ questions, setQuestions ] = useState([]);
 
   const handleNumberOfQuestions = (e) => {
     setNumberOfQuestions(e.target.value);
@@ -26,9 +28,20 @@ export default function QuizForm() {
     console.log("hey",e.target.value)
   }
 
+  const handleSelectedDifficulty = (e) => {
+    setDifficulty(e.target.value);
+    console.log("hey",e.target.value)
+  }
+
+  const handleType= (e) => {
+    setType(e.target.value);
+    console.log("hey",e.target.value)
+  }
+
+
   const fetchQuestions = async () => {
     const res = await fetch(
-      `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${selectedCategory}&difficulty=hard&type=multiple`
+      `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${selectedCategory}&difficulty=${difficulty}&type=${type}`
     );
     const data = await res.json();
     setQuestions(data.results);
@@ -62,7 +75,7 @@ export default function QuizForm() {
       </select>
 
       <label htmlFor="difficulty">Select a difficulty:</label>
-      <select name="difficulty" id="difficulty">
+      <select name="difficulty" id="difficulty" value={difficulty} onChange={handleSelectedDifficulty}>
         <option value="">Any difficulty</option>
         <option value="easy">Easy</option>
         <option value="medium">Medium</option>
@@ -70,10 +83,10 @@ export default function QuizForm() {
       </select>
 
       <label htmlFor="type">Select a type:</label>
-      <select name="type" id="type">
+      <select name="type" id="type" value={type} onChange={handleType}>
         <option value="">Any type</option>
-        <option value="">Multiple choice</option>
-        <option value="">True or False</option>
+        <option value="multiple">Multiple choice</option>
+        <option value="boolean">True or False</option>
       </select>
 
       <button onClick={fetchQuestions}>Start Quiz</button>
