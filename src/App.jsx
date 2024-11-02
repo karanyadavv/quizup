@@ -1,10 +1,12 @@
+import QuizForm from "./components/QuizForm"
 
 function App() {
 
 
   return (
     <>
-      <p className="text-3xl font-bold underline">Quizup</p>
+      <div className="text-3xl font-bold underline flex justify-center items-center">Quizup</div>
+      <QuizForm />
     </>
   )
 }
