@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function QuizForm() {
   const [ numberOfQuestions, setNumberOfQuestions ] = useState(5);
@@ -8,7 +9,9 @@ export default function QuizForm() {
   const [ difficulty, setDifficulty ] = useState("");
   const [ type, setType ] = useState("");
 
-  const [ questions, setQuestions ] = useState([]);
+  // const [ questions, setQuestions ] = useState([]);
+  
+  const navigate = useNavigate();
 
   const handleNumberOfQuestions = (e) => {
     setNumberOfQuestions(e.target.value);
@@ -44,9 +47,10 @@ export default function QuizForm() {
       `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${selectedCategory}&difficulty=${difficulty}&type=${type}`
     );
     const data = await res.json();
-    setQuestions(data.results);
-    console.log(data.response_code);
-    console.log(questions);
+    // setQuestions(data.results);
+    // console.log(data.response_code);
+    // console.log(questions);
+    navigate("/quiz", { state: data.results });
   };
 
 
