@@ -3,14 +3,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function QuizForm() {
-  const [ numberOfQuestions, setNumberOfQuestions ] = useState(5);
-  const [ category, setCategory ] = useState([]);
-  const [ selectedCategory, setSelectedCategory ] = useState();
-  const [ difficulty, setDifficulty ] = useState("");
-  const [ type, setType ] = useState("");
+  const [numberOfQuestions, setNumberOfQuestions] = useState(5);
+  const [category, setCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState();
+  const [difficulty, setDifficulty] = useState("");
+  const [type, setType] = useState("");
 
   // const [ questions, setQuestions ] = useState([]);
-  
+
   const navigate = useNavigate();
 
   const handleNumberOfQuestions = (e) => {
@@ -28,19 +28,18 @@ export default function QuizForm() {
 
   const handleSelectedCategory = (e) => {
     setSelectedCategory(e.target.value);
-    console.log("hey",e.target.value)
-  }
+    console.log("hey", e.target.value);
+  };
 
   const handleSelectedDifficulty = (e) => {
     setDifficulty(e.target.value);
-    console.log("hey",e.target.value)
-  }
+    console.log("hey", e.target.value);
+  };
 
-  const handleType= (e) => {
+  const handleType = (e) => {
     setType(e.target.value);
-    console.log("hey",e.target.value)
-  }
-
+    console.log("hey", e.target.value);
+  };
 
   const fetchQuestions = async () => {
     const res = await fetch(
@@ -52,7 +51,6 @@ export default function QuizForm() {
     // console.log(questions);
     navigate("/quiz", { state: data.results });
   };
-
 
   return (
     <>
@@ -67,8 +65,12 @@ export default function QuizForm() {
       />
 
       <label htmlFor="category">Select Category:</label>
-      <select name="category" value={selectedCategory} onChange={handleSelectedCategory}>
-      <option value="">Any category</option>
+      <select
+        name="category"
+        value={selectedCategory}
+        onChange={handleSelectedCategory}
+      >
+        <option value="">Any category</option>
         {category?.map((item) => {
           return (
             <option value={item.id} key={item.id}>
@@ -79,7 +81,12 @@ export default function QuizForm() {
       </select>
 
       <label htmlFor="difficulty">Select a difficulty:</label>
-      <select name="difficulty" id="difficulty" value={difficulty} onChange={handleSelectedDifficulty}>
+      <select
+        name="difficulty"
+        id="difficulty"
+        value={difficulty}
+        onChange={handleSelectedDifficulty}
+      >
         <option value="">Any difficulty</option>
         <option value="easy">Easy</option>
         <option value="medium">Medium</option>
