@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom"
 
 
@@ -6,6 +6,8 @@ export default function Quiz(){
   const location  = useLocation();
   const questions = location.state;
   const DATA_LENGTH = questions.length;
+  let CORRECT_ANSWERS = 0;
+  let correctAnswerRef = useRef(CORRECT_ANSWERS);
   const [ currentQuestionIndex, setCurrentQuestionIndex ] = useState(0);
   const [ shuffledAnswers, setShuffledAnswers ] = useState([]);
 
@@ -26,6 +28,8 @@ export default function Quiz(){
 
   const handleUserAnswer = (event) => {
     if(event.target.value === questions[currentQuestionIndex].correct_answer){
+      correctAnswerRef.current++;
+      console.log(correctAnswerRef.current)
       console.log("correct answer")
     }else{
       console.log("incorrect answer");
@@ -46,7 +50,7 @@ export default function Quiz(){
     {currentQuestion && (
       <div>{currentQuestion.question}</div>
     )}
-    { currentQuestion && (
+    {currentQuestion && (
       shuffledAnswers.map((answer, index)=>{
         return (
         <button key={index} onClick={handleUserAnswer} value={answer} className="flex justify-center items-center">
@@ -56,6 +60,9 @@ export default function Quiz(){
       })
     )
     }
+    {!currentQuestion && (
+        <div>Result: {correctAnswerRef.current}</div>
+    )}
     <button onClick={handleContinue}>Continue</button>
     </>
   )
