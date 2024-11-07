@@ -13,8 +13,6 @@ export default function Quiz() {
 
   const currentQuestion = questions?.[currentQuestionIndex];
 
-  console.log("Questions data:", questions);
-
   useEffect(() => {
     if (questions?.[currentQuestionIndex]) {
       const allAnswers = [
@@ -45,10 +43,15 @@ export default function Quiz() {
   };
   return (
     <>
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 font-inter">
+        <div className="flex gap-2 items-center">
+          <div className="border bg-[#f4f3f6] rounded-lg w-80 h-4 md:w-90"></div>
+          <span className="text-sm text-gray-500">1/{DATA_LENGTH}</span>
+        </div>
+
         {currentQuestion && (
-          <div className="w-full max-w-2xl bg-white rounded-lg shadow-md p-6 mb-6">
-            <p className="text-lg text-gray-700 mb-6">
+          <div className="w-full max-w-2xl p-6 mb-6">
+            <p className="text-xl text-[#2e3270] mb-6 font-bold">
               {decode(currentQuestion.question)}
             </p>
 
@@ -58,7 +61,7 @@ export default function Quiz() {
                   key={index}
                   onClick={handleUserAnswer}
                   value={answer}
-                  className="w-full py-3 px-4 text-left bg-gray-100 hover:bg-gray-200 active:bg-gray-300 rounded-md transition-colors duration-200"
+                  className="w-full py-3 px-4 text-left bg-[#f4f3f6] rounded-md duration-200"
                 >
                   {decode(answer)}
                 </button>

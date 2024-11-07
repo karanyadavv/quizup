@@ -84,12 +84,12 @@ export default function QuizForm() {
 
   return (
     <>
-      <div className="flex flex-col gap-20 justify-center items-center h-screen font-inter">
+      <div className="flex flex-col gap-8 md:gap-20 justify-center items-center h-screen font-inter">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Create Your Quiz
         </h1>
 
-        <div className="flex justify-center items-center gap-20">
+        <div className="flex flex-col gap-8 md:gap-20 md:flex md:flex-row md:justify-center md:items-center">
           <div>
             <label
               htmlFor="number"
@@ -129,7 +129,7 @@ export default function QuizForm() {
             </select>
           </div>
         </div>
-        <div className="flex justify-center items-center ">
+        <div className="flex flex-col w-5/6 gap-8 md:flex md:flex-row md:justify-center md:items-center ">
           <div>
             <label
               htmlFor="difficulty"
