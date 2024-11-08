@@ -50,12 +50,14 @@ export default function Quiz() {
   return (
     <>
       <CloseButtonSVG />
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-40 mt-2 font-inter">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-10 mt-2 font-inter relative h-screen">
         {currentQuestion && (
-          <ProgressBar
-            currentQuestionIndex={currentQuestionIndex}
-            DATA_LENGTH={DATA_LENGTH}
-          />
+          <div className="fixed top-20 left-10 md:left-[750px] right-0">
+            <ProgressBar
+              currentQuestionIndex={currentQuestionIndex}
+              dataLength={DATA_LENGTH}
+            />
+          </div>
         )}
         {currentQuestion && (
           <div className="w-full max-w-2xl p-6 mb-6">
@@ -111,7 +113,7 @@ export default function Quiz() {
         )}
         <button
           onClick={handleContinue}
-          className="bg-[#31cd63] text-white w-5/6 md:w-[200px] h-14 font-bold rounded-md"
+          className="bg-[#31cd63] text-white w-5/6 md:w-[200px] h-14 font-bold rounded-md fixed bottom-16 left-10 md:left-[850px] right-0"
         >
           {currentQuestionIndex < DATA_LENGTH ? "CONTINUE" : "OKAY"}
         </button>
