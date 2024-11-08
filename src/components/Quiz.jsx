@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { decode } from "html-entities";
 import CloseButtonSVG from "./CloseButtonSVG";
+import ProgressBar from "./ProgressBar";
 
 export default function Quiz() {
   const location = useLocation();
@@ -51,15 +52,10 @@ export default function Quiz() {
       <CloseButtonSVG />
       <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-40 mt-2 font-inter">
         {currentQuestion && (
-          <div className="flex gap-2 items-center">
-            <div className="border bg-[#f4f3f6] rounded-lg w-80 h-4 relative overflow-hidden md:w-90">
-              <div
-                className="absolute bg-[#31cd63]"
-                style={{ transform: `translateX(${10 - 100}%)` }}
-              ></div>
-            </div>
-            <span className="text-sm text-gray-500">1/{DATA_LENGTH}</span>
-          </div>
+          <ProgressBar
+            currentQuestionIndex={currentQuestionIndex}
+            DATA_LENGTH={DATA_LENGTH}
+          />
         )}
         {currentQuestion && (
           <div className="w-full max-w-2xl p-6 mb-6">
