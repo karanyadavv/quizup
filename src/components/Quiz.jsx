@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { decode } from "html-entities";
 import CloseButtonSVG from "./CloseButtonSVG";
 import ProgressBar from "./ProgressBar";
+import reward from "../assets/result.svg";
 
 export default function Quiz() {
   const location = useLocation();
@@ -90,18 +91,16 @@ export default function Quiz() {
             <div className="grid grid-cols-1 gap-4">
               {shuffledAnswers.map((answer, index) => {
                 return (
-                  <>
-                    <button
-                      key={index}
-                      onClick={() => handleUserAnswer(answer)}
-                      disabled={isAnswerChecked}
-                      className={`w-full h-14 py-3 px-4 text-left bg-[#f4f3f6] rounded-md duration-200 ${getAnswerButtonClass(
-                        answer
-                      )}`}
-                    >
-                      {decode(answer)}
-                    </button>
-                  </>
+                  <button
+                    key={index}
+                    onClick={() => handleUserAnswer(answer)}
+                    disabled={isAnswerChecked}
+                    className={`w-full h-14 py-3 px-4 text-left bg-[#f4f3f6] rounded-md duration-200 ${getAnswerButtonClass(
+                      answer
+                    )}`}
+                  >
+                    {decode(answer)}
+                  </button>
                 );
               })}
             </div>
@@ -109,9 +108,15 @@ export default function Quiz() {
         )}
 
         {!currentQuestion && (
-          <div className="w-5/6 h-14 md:w-[200px]">
-            <div className="flex py-3 px-4 text-left bg-[#f4f3f6] rounded-md duration-200">
-              RESULT: <span>{correctAnswerRef.current}</span>
+          <div className="w-5/6 h-14 md:w-[250px]">
+            <img src={reward} alt="reward" width={900} />
+            <div className="flex justify-center items-center font-bold text-xl py-4 px-4 gap-24 bg-[#f4f3f6] text-zinc-600 rounded-md duration-200">
+              RESULT:
+              <span className="flex justify-center items-center text-center bg-slate-500 rounded-full w-8 h-8 text-white relative">
+                <span className="absolute left-2 top-0.5 text-md">
+                  {correctAnswerRef.current}
+                </span>
+              </span>
             </div>
           </div>
         )}
