@@ -73,7 +73,7 @@ export default function Quiz() {
   return (
     <>
       <CloseButtonSVG />
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-10 mt-2 font-inter relative h-screen">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-8 mt-2 font-inter relative h-screen">
         {currentQuestion && (
           <div className="fixed top-20 left-10 md:left-[750px] right-0">
             <ProgressBar
@@ -109,11 +109,11 @@ export default function Quiz() {
 
         {!currentQuestion && (
           <div className="w-5/6 h-14 md:w-[250px]">
-            <img src={reward} alt="reward" width={900} />
+            <img src={reward} alt="reward" />
             <div className="flex justify-center items-center font-bold text-xl py-4 px-4 gap-24 bg-[#f4f3f6] text-zinc-600 rounded-md duration-200">
               RESULT:
               <span className="flex justify-center items-center text-center bg-slate-500 rounded-full w-8 h-8 text-white relative">
-                <span className="absolute left-2 top-0.5 text-md">
+                <span className="absolute left-2.5 top-0.5 text-md">
                   {correctAnswerRef.current}
                 </span>
               </span>

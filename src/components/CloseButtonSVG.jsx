@@ -6,7 +6,7 @@ export default function CloseButtonSVG() {
       fill="#f4f3f6"
       strokeWidth={1}
       stroke="black"
-      className="size-8 top-4 right-8 md:top-14 md:right-80 absolute cursor-pointer"
+      className="cursor-pointer size-8 top-4 right-8 md:top-14 md:right-80 absolute"
     >
       <path
         fillRule="evenodd"
