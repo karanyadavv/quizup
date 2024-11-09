@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { decode } from "html-entities";
 import CloseButtonSVG from "./CloseButtonSVG";
 import ProgressBar from "./ProgressBar";
 import reward from "../assets/result.svg";
 
 export default function Quiz() {
+  const navigate = useNavigate();
   const location = useLocation();
   const questions = location.state;
   const DATA_LENGTH = questions.length;
@@ -14,6 +15,7 @@ export default function Quiz() {
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const currentQuestion = questions?.[currentQuestionIndex];
 
@@ -70,9 +72,42 @@ export default function Quiz() {
     return "bg-[#f4f3f6] opacity-50";
   };
 
+  const showClosePopup = () => {
+    setShowPopup(true);
+  };
+
+  const closeClosePopup = () => {
+    setShowPopup(false);
+  };
+
+  const handleCancel = () => {
+    navigate("/");
+  };
+
   return (
     <>
-      <CloseButtonSVG />
+      <CloseButtonSVG onClick={showClosePopup} />
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 space-x-2 rounded shadow-lg max-w-md w-full">
+            <h2 className="text-lg font-bold mb-4">
+              Are you sure you want to cancel?
+            </h2>
+            <button
+              className="mt-4 bg-white text-black border border-black py-1.5 px-4 rounded hover:bg-gray-500 hover:bg-opacity-50"
+              onClick={closeClosePopup}
+            >
+              Cancel
+            </button>
+            <button
+              className="mt-4 bg-red-500 w-20 text-white py-2 px-4 rounded hover:bg-gray-500 hover:bg-opacity-80"
+              onClick={handleCancel}
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      )}
       <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-8 mt-2 font-inter relative h-screen">
         {currentQuestion && (
           <div className="fixed top-20 left-10 md:left-[750px] right-0">
