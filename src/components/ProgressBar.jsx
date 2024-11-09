@@ -3,7 +3,7 @@ export default function ProgressBar({ currentQuestionIndex, dataLength }) {
     <div className="flex gap-2 items-center">
       <div className="border bg-[#f4f3f6] rounded-lg w-80 h-4 relative overflow-hidden md:w-90">
         <div
-          className="absolute bg-[#31cd63] h-full"
+          className="absolute bg-[#31cd63] h-full transition-all"
           style={{
             width: `${((currentQuestionIndex + 1) / dataLength) * 100}%`,
           }}

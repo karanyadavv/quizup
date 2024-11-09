@@ -11,7 +11,8 @@ export default function Quiz() {
   let correctAnswerRef = useRef(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
-  const [isCorrect, setIsCorrect] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [isAnswerChecked, setIsAnswerChecked] = useState(false);
 
   const currentQuestion = questions?.[currentQuestionIndex];
 
@@ -23,28 +24,49 @@ export default function Quiz() {
       ];
       const shuffled = [...allAnswers].sort(() => Math.random() - 0.5);
       setShuffledAnswers(shuffled);
+      setSelectedAnswer(null);
+      setIsAnswerChecked(false);
     }
-  }, [currentQuestion]);
+  }, [currentQuestion, questions]);
 
-  const handleUserAnswer = (event) => {
-    if (event.target.value === questions[currentQuestionIndex].correct_answer) {
+  const handleUserAnswer = (answer) => {
+    if (isAnswerChecked) return;
+
+    setSelectedAnswer(answer);
+    setIsAnswerChecked(true);
+    if (answer === questions[currentQuestionIndex].correct_answer) {
       correctAnswerRef.current++;
-      console.log("correct answer");
-      setIsCorrect(true);
-    } else {
-      console.log("incorrect answer");
-      setIsCorrect(false);
     }
   };
 
   const handleContinue = () => {
+    if (!isAnswerChecked) return;
     setCurrentQuestionIndex((prev) => {
-      if (prev === DATA_LENGTH + 1) {
-        return;
+      if (prev === DATA_LENGTH - 1) {
+        return prev + 1;
       } else {
         return prev + 1;
       }
     });
+  };
+
+  const getAnswerButtonClass = (answer) => {
+    if (!isAnswerChecked) {
+      return "bg-[#f4f3f6] hover:bg-[#e8e7ea]";
+    }
+
+    if (answer === currentQuestion.correct_answer) {
+      return "bg-green-500 text-white";
+    }
+
+    if (
+      answer === selectedAnswer &&
+      answer !== currentQuestion.correct_answer
+    ) {
+      return "bg-red-500 text-white";
+    }
+
+    return "bg-[#f4f3f6] opacity-50";
   };
 
   return (
@@ -69,31 +91,13 @@ export default function Quiz() {
               {shuffledAnswers.map((answer, index) => {
                 return (
                   <>
-                    {/* <div className="w-full h-14 py-3 px-4 text-left bg-[#f4f3f6] rounded-md duration-200">
-                      <input
-                        type="radio"
-                        id="answer"
-                        name="answer"
-                        //className="opacity-0"
-                      />
-                      <label
-                        htmlFor="answer"
-                        key={index}
-                        value={answer}
-                        className=""
-                      >
-                        {decode(answer)}
-                      </label>
-                    </div> */}
                     <button
                       key={index}
-                      onClick={handleUserAnswer}
-                      value={answer}
-                      className={`w-full h-14 py-3 px-4 text-left bg-[#f4f3f6] rounded-md duration-200 ${
-                        isCorrect
-                          ? "active:bg-green-500 active:text-white"
-                          : "active:bg-red-500"
-                      }`}
+                      onClick={() => handleUserAnswer(answer)}
+                      disabled={isAnswerChecked}
+                      className={`w-full h-14 py-3 px-4 text-left bg-[#f4f3f6] rounded-md duration-200 ${getAnswerButtonClass(
+                        answer
+                      )}`}
                     >
                       {decode(answer)}
                     </button>
@@ -113,7 +117,12 @@ export default function Quiz() {
         )}
         <button
           onClick={handleContinue}
-          className="bg-[#31cd63] text-white w-5/6 md:w-[200px] h-14 font-bold rounded-md fixed bottom-16 left-10 md:left-[850px] right-0"
+          disabled={!isAnswerChecked && currentQuestion}
+          className={`w-5/6 md:w-[200px] h-14 font-bold rounded-md fixed bottom-16 left-10 md:left-[850px] right-0 ${
+            !isAnswerChecked && currentQuestion
+              ? "bg-gray-400 text-white cursor-not-allowed"
+              : "bg-[#31cd63] text-white hover:bg-[#2bb959]"
+          }`}
         >
           {currentQuestionIndex < DATA_LENGTH ? "CONTINUE" : "OKAY"}
         </button>
