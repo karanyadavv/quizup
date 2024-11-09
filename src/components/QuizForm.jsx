@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SpinnerSVG from "./SpinnerSVG";
 
 export default function QuizForm() {
   const [numberOfQuestions, setNumberOfQuestions] = useState(5);
@@ -179,7 +180,13 @@ export default function QuizForm() {
             disabled={isLoading}
             className="bg-[#31cd63] text-white w-[200px] h-[50px] font-bold rounded-md"
           >
-            {isLoading ? "Loading..." : "START QUIZ"}
+            {isLoading ? (
+              <div className="text-white flex justify-center items-center">
+                <SpinnerSVG />
+              </div>
+            ) : (
+              "START QUIZ"
+            )}
           </button>
         </div>
       </div>
