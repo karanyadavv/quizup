@@ -86,7 +86,7 @@ export default function Quiz() {
 
   return (
     <>
-      <CloseButtonSVG onClick={showClosePopup} />
+      {currentQuestion && <CloseButtonSVG onClick={showClosePopup} />}
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 space-x-2 rounded shadow-lg max-w-md w-full">
