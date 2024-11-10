@@ -44,6 +44,7 @@ export default function Quiz() {
 
   const handleContinue = () => {
     if (!isAnswerChecked) return;
+    if (!currentQuestion) handleCancel();
     setCurrentQuestionIndex((prev) => {
       if (prev === DATA_LENGTH - 1) {
         return prev + 1;
